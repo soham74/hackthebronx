@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import React from "react";
+import { Inter } from 'next/font/google';
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import "./globals.css";
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "SafePath Bronx - Intelligent Safety Navigation",
@@ -23,16 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" 
-          rel="stylesheet" 
-        />
-
-      </head>
-      <body className="font-sans antialiased">
+      <body className={`${inter.className} antialiased`}>
         <LanguageProvider>
           {children}
         </LanguageProvider>

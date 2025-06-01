@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { reportService, CommunityReport } from '@/services/reportService';
@@ -80,14 +80,14 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         const updatedReports = reportService.getReports();
         setCommunityReports(updatedReports);
         if (map) addReportMarkers(map, updatedReports);
-      } catch (error) {
+      } catch {
         // Silent fail - voting error
       }
     };
     return () => {
       delete (window as Window & typeof globalThis & { voteReport?: (reportId: string, isUpvote: boolean) => void }).voteReport;
     };
-  }, [map]);
+  }, [map]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchCrimeData = async () => {
     try {
@@ -140,12 +140,12 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
                 setCrimeData(validBronxCrimes);
               }
             }
-          } catch (testError) {
+          } catch {
             // Fallback query failed
           }
         }
       }
-    } catch (error) {
+    } catch {
       // Crime data fetch failed
     }
   };
@@ -174,7 +174,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
       });
     });
 
-    const newMarkers = nearRouteCrimes.slice(0, 100).map((crime, index) => {
+    const newMarkers = nearRouteCrimes.slice(0, 100).map((crime) => {
       const lat = parseFloat(crime.latitude);
       const lng = parseFloat(crime.longitude);
 
@@ -287,7 +287,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
     setCrimeMarkers(newMarkers);
   };
 
-  const addReportMarkers = (mapInstance: google.maps.Map, reports: CommunityReport[]) => {
+  const addReportMarkers = useCallback((mapInstance: google.maps.Map, reports: CommunityReport[]) => {
     if (currentInfoWindow) {
       currentInfoWindow.close();
       setCurrentInfoWindow(null);
@@ -455,7 +455,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
     });
 
     setReportMarkers(newMarkers);
-  };
+  }, [currentInfoWindow, t, reportMarkers]);
 
 
 
@@ -478,7 +478,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
       setReportLocation(null);
       setSelectedReportType(null);
       setReportComment('');
-    } catch (error) {
+    } catch {
       alert(t('error.reportSubmissionFailed'));
     }
   };
@@ -507,7 +507,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
 
       directionsService.route(request, (result, status) => {
         if (status === 'OK' && result) {
-          const routes = result.routes.slice(0, 3).map((route, index) => {
+          const routes = result.routes.slice(0, 3).map((route) => {
             let riskPoints = 0;
             const processedCrimes = new Set<string>();
             
@@ -551,7 +551,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
 
             return {
               route,
-              renderer: null as any,
+              renderer: null as unknown as google.maps.DirectionsRenderer,
               safetyScore,
               efficiencyScore,
               compositeScore,
@@ -562,9 +562,9 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
 
           const sortedRoutes = routes.sort((a, b) => b.compositeScore - a.compositeScore);
           
-          sortedRoutes.forEach((routeOption, index) => {
-            if (index === 0) routeOption.recommendation = 'safest';
-            else if (index === 1) routeOption.recommendation = 'balanced'; 
+          sortedRoutes.forEach((routeOption, routeIndex) => {
+            if (routeIndex === 0) routeOption.recommendation = 'safest';
+            else if (routeIndex === 1) routeOption.recommendation = 'balanced'; 
             else routeOption.recommendation = 'fastest';
 
             const colors = {
@@ -583,8 +583,8 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
                 strokeOpacity: style.opacity,
                 zIndex: style.zIndex
               },
-              suppressMarkers: index > 0,
-              preserveViewport: index > 0
+              suppressMarkers: routeIndex > 0,
+              preserveViewport: routeIndex > 0
             });
 
             renderer.setDirections({ ...result, routes: [routeOption.route] });
@@ -601,7 +601,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         }
         setIsCalculatingRoutes(false);
       });
-    } catch (error) {
+    } catch {
       setIsCalculatingRoutes(false);
     }
   };
@@ -609,12 +609,11 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
   useEffect(() => {
     const initMap = async () => {
       try {
-        // Temporary debugging
-        const envApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-        const apiKey = envApiKey || 'AIzaSyDyZ0afTSGuDA4PQGjNJGk3-IXGkBWMglQ';
+        const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
         
-        console.log('Environment API Key:', envApiKey ? 'Found' : 'Not found');
-        console.log('Using API Key:', apiKey ? 'Available' : 'Not available');
+        if (!apiKey) {
+          throw new Error('Google Maps API key not found');
+        }
 
         const loader = new Loader({
           apiKey: apiKey,
@@ -664,7 +663,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
               const place = destAutocomplete.getPlace();
               if (place.formatted_address) setDestination(place.formatted_address);
             });
-          } catch (error) {
+          } catch {
             // Fallback if autocomplete fails
           }
         }
@@ -687,20 +686,20 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
 
         setIsLoading(false);
         await fetchCrimeData();
-      } catch (error) {
+      } catch {
         setError('Failed to load map');
         setIsLoading(false);
       }
     };
 
     initMap();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (map && communityReports.length > 0) {
       addReportMarkers(map, communityReports);
     }
-  }, [map, communityReports]);
+  }, [map, communityReports, addReportMarkers]);
 
   if (error) {
     return (

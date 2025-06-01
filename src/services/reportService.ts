@@ -38,7 +38,7 @@ class ReportService {
       }
 
       return validReports;
-    } catch (error) {
+    } catch {
       return [];
     }
   }
@@ -50,12 +50,12 @@ class ReportService {
         .slice(0, this.maxReports);
       
       sessionStorage.setItem(this.storageKey, JSON.stringify(reportsToSave));
-    } catch (error) {
+    } catch {
       this.cleanupOldReports();
       try {
         const recentReports = reports.slice(0, Math.floor(this.maxReports / 2));
         sessionStorage.setItem(this.storageKey, JSON.stringify(recentReports));
-      } catch (retryError) {
+      } catch {
         // Silent fail - storage issues
       }
     }
@@ -202,7 +202,7 @@ class ReportService {
   clearAllReports(): void {
     try {
       sessionStorage.removeItem(this.storageKey);
-    } catch (error) {
+    } catch {
       // Silent fail
     }
   }
