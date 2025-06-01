@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "set PORT=3000 && set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=AIzaSyDyZ0afTSGuDA4PQGjNJGk3-IXGkBWMglQ && next dev",
+    "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

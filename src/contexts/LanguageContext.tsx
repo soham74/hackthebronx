@@ -12,33 +12,24 @@ interface LanguageContextType {
 
 const translations = {
   en: {
-    // Navigation
     'nav.map': 'Map',
     'nav.reports': 'Reports',
     'nav.about': 'About',
     'nav.getStarted': 'Get Started',
     'nav.safePath': 'SafePath Bronx',
     'nav.tagline': 'Intelligent Safety Navigation',
-    
-    // Main Interface
     'main.title': 'SafePath',
     'main.subtitle': 'Find your safest route',
     'main.origin': 'Enter starting location',
     'main.destination': 'Enter destination',
     'main.findRoutes': 'Find Safe Routes',
     'main.reportIssue': 'Report Safety Issue',
-    
-    // Crime Layer
     'crime.title': 'Crime Data Layer',
     'crime.subtitle': 'Show recent safety incidents',
-    
-    // Footer
     'footer.poweredBy': 'Powered by NYC Open Data',
     'footer.realTime': 'Real-time safety analysis',
     'footer.lastUpdated': 'Last updated: Just now',
     'footer.live': 'Live',
-    
-    // Report Modal
     'report.title': 'Report Safety Issue',
     'report.poorLighting': 'Poor Lighting',
     'report.generalSafety': 'General Safety Concern',
@@ -47,8 +38,6 @@ const translations = {
     'report.other': 'Other Safety Issue',
     'report.additionalDetails': 'Additional details for',
     'report.optional': '(optional):',
-    
-    // Route Information
     'route.safest': 'Safest Route',
     'route.balanced': 'Balanced Route',
     'route.fastest': 'Fastest Route',
@@ -56,8 +45,6 @@ const translations = {
     'route.safetyScore': 'Safety Score',
     'route.efficiency': 'Efficiency',
     'route.composite': 'Overall',
-    
-    // Route Display
     'routes.title': 'Routes',
     'routes.safest': 'Safest',
     'routes.balanced': 'Balanced',
@@ -68,8 +55,6 @@ const translations = {
     'routes.score': 'Score',
     'routes.openInMaps': 'Open in Maps',
     'routes.analysisNote': 'Showing {count} incidents near routes (from {total} total)',
-    
-    // Community Reports
     'community.poorLighting': 'Poor Lighting',
     'community.safetyConcern': 'Safety Concern',
     'community.suspiciousActivity': 'Suspicious Activity',
@@ -81,16 +66,12 @@ const translations = {
     'community.notHelpful': 'Not helpful',
     'community.details': 'Details',
     'community.communityReport': 'Community Report',
-    
-    // Crime Information
     'crime.riskLevel': 'Risk Level',
     'crime.date': 'Date',
     'crime.timeAgo': 'Time ago',
     'crime.today': 'Today',
     'crime.daysAgo': '{days} days ago',
     'crime.dayAgo': '1 day ago',
-    
-    // Report Modal Additional
     'report.selectIssueType': 'Select Issue Type:',
     'report.additionalDetailsLabel': 'Additional Details (Optional):',
     'report.charactersRemaining': '{count}/200 characters',
@@ -100,50 +81,71 @@ const translations = {
     'report.instructions': 'Select the type of safety issue you want to report. You can add optional details to help other users. Reports are anonymous and help build a safer community map.',
     'report.locationLabel': 'Location: {lat}, {lng}',
     'report.clickToSetLocation': 'Click anywhere on the map to set location',
-    
-    // Error Messages
     'error.enterBothLocations': 'Please enter both starting location and destination',
     'error.noRoutesFound': 'Could not find routes between these locations.',
     'error.reportSubmissionFailed': 'Error submitting report. A similar report may already exist nearby.',
     'error.mapLoadFailed': 'Failed to load map',
     'error.loadingMap': 'Loading SafePath...',
-    
-    // Languages
     'lang.english': 'English',
     'lang.spanish': 'Español',
     'lang.french': 'Français',
     'lang.chinese': '中文',
     'lang.arabic': 'العربية',
     'lang.russian': 'Русский',
+    'reports.description': 'Learn about the data sources and reporting features that help keep our community safe.',
+    'reports.crimeData': 'Crime Data Analytics',
+    'reports.crimeDataDesc': 'Real-time crime statistics from NYC Open Data',
+    'reports.totalCrimes': 'Current Period',
+    'reports.dataSource': 'Data Source',
+    'reports.communityReports': 'Community Reports',
+    'reports.communityDesc': 'User-generated safety observations and alerts',
+    'reports.rightClick': 'Right-click on map',
+    'reports.reportTypes': 'Report Types',
+    'reports.types': 'types',
+    'reports.howItWorks': 'How It Works',
+    'reports.step1': 'Explore',
+    'reports.step1Desc': 'View real-time crime data and community reports on the interactive map',
+    'reports.step2': 'Navigate',
+    'reports.step2Desc': 'Get optimized safe routes with crime data analysis and risk assessment',
+    'reports.step3': 'Contribute',
+    'reports.step3Desc': 'Report safety issues to help build a safer community for everyone',
+    'about.description': 'SafePath Bronx is a community-driven safety navigation platform designed to help residents find the safest walking routes.',
+    'about.mission': 'Our Mission',
+    'about.missionDesc': 'To empower communities with data-driven safety tools that help people navigate their neighborhoods with confidence and contribute to collective safety awareness.',
+    'about.safety': 'Data-Driven Safety',
+    'about.safetyDesc': 'Real-time crime analytics and risk assessment',
+    'about.community': 'Community-Powered',
+    'about.communityDesc': 'Crowdsourced reports and collaborative safety mapping',
+    'about.features': 'Key Features',
+    'about.feature1': 'Real-time crime data integration',
+    'about.feature2': 'Smart route optimization for safety',
+    'about.feature3': 'Community safety reporting system',
+    'about.feature4': 'Multi-language accessibility support',
+    'about.contact': 'Get Involved',
+    'about.email': 'Contact',
+    'about.data': 'Data Sources',
+    'about.support': 'Support',
+    'about.supportDesc': '24/7 community assistance'
   },
   es: {
-    // Navigation
     'nav.map': 'Mapa',
     'nav.reports': 'Reportes',
     'nav.about': 'Acerca de',
     'nav.getStarted': 'Comenzar',
     'nav.safePath': 'SafePath Bronx',
     'nav.tagline': 'Navegación Inteligente de Seguridad',
-    
-    // Main Interface
     'main.title': 'SafePath',
     'main.subtitle': 'Encuentra tu ruta más segura',
     'main.origin': 'Ingresa ubicación de inicio',
     'main.destination': 'Ingresa destino',
     'main.findRoutes': 'Encontrar Rutas Seguras',
     'main.reportIssue': 'Reportar Problema de Seguridad',
-    
-    // Crime Layer
     'crime.title': 'Capa de Datos de Crimen',
     'crime.subtitle': 'Mostrar incidentes de seguridad recientes',
-    
-    // Footer
     'footer.poweredBy': 'Impulsado por NYC Open Data',
     'footer.realTime': 'Análisis de seguridad en tiempo real',
     'footer.lastUpdated': 'Última actualización: Ahora mismo',
     'footer.live': 'En vivo',
-    
-    // Report Modal
     'report.title': 'Reportar Problema de Seguridad',
     'report.poorLighting': 'Iluminación Deficiente',
     'report.generalSafety': 'Preocupación General de Seguridad',
@@ -152,8 +154,6 @@ const translations = {
     'report.other': 'Otro Problema de Seguridad',
     'report.additionalDetails': 'Detalles adicionales para',
     'report.optional': '(opcional):',
-    
-    // Route Information
     'route.safest': 'Ruta Más Segura',
     'route.balanced': 'Ruta Balanceada',
     'route.fastest': 'Ruta Más Rápida',
@@ -161,8 +161,6 @@ const translations = {
     'route.safetyScore': 'Puntuación de Seguridad',
     'route.efficiency': 'Eficiencia',
     'route.composite': 'General',
-    
-    // Route Display
     'routes.title': 'Rutas',
     'routes.safest': 'Más Segura',
     'routes.balanced': 'Balanceada',
@@ -173,8 +171,6 @@ const translations = {
     'routes.score': 'Puntuación',
     'routes.openInMaps': 'Abrir en Maps',
     'routes.analysisNote': 'Mostrando {count} incidentes cerca de rutas (de {total} total)',
-    
-    // Community Reports
     'community.poorLighting': 'Iluminación Deficiente',
     'community.safetyConcern': 'Preocupación General de Seguridad',
     'community.suspiciousActivity': 'Actividad Sospechosa',
@@ -186,16 +182,12 @@ const translations = {
     'community.notHelpful': 'No útil',
     'community.details': 'Detalles',
     'community.communityReport': 'Reporte de Comunidad',
-    
-    // Crime Information
     'crime.riskLevel': 'Nivel de Riesgo',
     'crime.date': 'Fecha',
     'crime.timeAgo': 'Hace tiempo',
     'crime.today': 'Hoy',
     'crime.daysAgo': '{days} días atrás',
     'crime.dayAgo': 'Hace 1 día',
-    
-    // Report Modal Additional
     'report.selectIssueType': 'Seleccionar Tipo de Problema:',
     'report.additionalDetailsLabel': 'Detalles Adicionales (Opcional):',
     'report.charactersRemaining': '{count}/200 caracteres',
@@ -205,15 +197,11 @@ const translations = {
     'report.instructions': 'Selecciona el tipo de problema de seguridad que quieres reportar. Puedes agregar detalles opcionales para ayudar a otros usuarios. Los informes son anónimos y ayudan a construir un mapa de comunidad más seguro.',
     'report.locationLabel': 'Ubicación: {lat}, {lng}',
     'report.clickToSetLocation': 'Haz clic en cualquier lugar del mapa para establecer la ubicación',
-    
-    // Error Messages
     'error.enterBothLocations': 'Por favor, ingrese ambas ubicaciones de inicio y destino',
     'error.noRoutesFound': 'No se encontraron rutas entre estas ubicaciones.',
     'error.reportSubmissionFailed': 'Error al enviar el informe. Ya existe un informe similar cerca.',
     'error.mapLoadFailed': 'Error al cargar el mapa',
     'error.loadingMap': 'Cargando SafePath...',
-    
-    // Languages
     'lang.english': 'English',
     'lang.spanish': 'Español',
     'lang.french': 'Français',
@@ -222,33 +210,24 @@ const translations = {
     'lang.russian': 'Русский',
   },
   fr: {
-    // Navigation
     'nav.map': 'Carte',
     'nav.reports': 'Rapports',
     'nav.about': 'À propos',
     'nav.getStarted': 'Commencer',
     'nav.safePath': 'SafePath Bronx',
     'nav.tagline': 'Navigation Intelligente de Sécurité',
-    
-    // Main Interface
     'main.title': 'SafePath',
     'main.subtitle': 'Trouvez votre itinéraire le plus sûr',
     'main.origin': 'Entrez le lieu de départ',
     'main.destination': 'Entrez la destination',
     'main.findRoutes': 'Trouver des Itinéraires Sûrs',
     'main.reportIssue': 'Signaler un Problème de Sécurité',
-    
-    // Crime Layer
     'crime.title': 'Couche de Données Criminelles',
     'crime.subtitle': 'Afficher les incidents de sécurité récents',
-    
-    // Footer
     'footer.poweredBy': 'Alimenté par NYC Open Data',
     'footer.realTime': 'Analyse de sécurité en temps réel',
     'footer.lastUpdated': 'Dernière mise à jour: À l\'instant',
     'footer.live': 'En direct',
-    
-    // Report Modal
     'report.title': 'Signaler un Problème de Sécurité',
     'report.poorLighting': 'Éclairage Défaillant',
     'report.generalSafety': 'Préoccupation Générale de Sécurité',
@@ -257,8 +236,6 @@ const translations = {
     'report.other': 'Autre Problème de Sécurité',
     'report.additionalDetails': 'Détails supplémentaires pour',
     'report.optional': '(optionnel):',
-    
-    // Route Information
     'route.safest': 'Itinéraire le Plus Sûr',
     'route.balanced': 'Itinéraire Équilibré',
     'route.fastest': 'Itinéraire le Plus Rapide',
@@ -266,8 +243,6 @@ const translations = {
     'route.safetyScore': 'Score de Sécurité',
     'route.efficiency': 'Efficacité',
     'route.composite': 'Global',
-    
-    // Route Display
     'routes.title': 'Itinéraires',
     'routes.safest': 'Plus Sûr',
     'routes.balanced': 'Équilibré',
@@ -278,8 +253,6 @@ const translations = {
     'routes.score': 'Score',
     'routes.openInMaps': 'Ouvrir dans Maps',
     'routes.analysisNote': 'Affichage de {count} incidents près des itinéraires (sur {total} total)',
-    
-    // Community Reports
     'community.poorLighting': 'Éclairage Défaillant',
     'community.safetyConcern': 'Préoccupation Générale de Sécurité',
     'community.suspiciousActivity': 'Activité Suspecte',
@@ -291,16 +264,12 @@ const translations = {
     'community.notHelpful': 'Pas utile',
     'community.details': 'Détails',
     'community.communityReport': 'Rapport de Communauté',
-    
-    // Crime Information
     'crime.riskLevel': 'Niveau de Risque',
     'crime.date': 'Date',
     'crime.timeAgo': 'Il y a du temps',
     'crime.today': 'Aujourd\'hui',
     'crime.daysAgo': '{days} jours plus tôt',
     'crime.dayAgo': 'Il y a 1 jour',
-    
-    // Report Modal Additional
     'report.selectIssueType': 'Sélectionner le Type de Problème:',
     'report.additionalDetailsLabel': 'Détails Supplémentaires (Optionnel):',
     'report.charactersRemaining': '{count}/200 caractères',
@@ -310,15 +279,11 @@ const translations = {
     'report.instructions': 'Sélectionnez le type de problème de sécurité que vous souhaitez signaler. Vous pouvez ajouter des détails supplémentaires pour aider les autres utilisateurs. Les rapports sont anonymes et aident à construire une carte communautaire plus sûre.',
     'report.locationLabel': 'Emplacement: {lat}, {lng}',
     'report.clickToSetLocation': 'Cliquez n\'importe où sur la carte pour définir l\'emplacement',
-    
-    // Error Messages
     'error.enterBothLocations': 'Veuillez entrer les deux emplacements de départ et d\'arrivée',
     'error.noRoutesFound': 'Impossible de trouver des itinéraires entre ces emplacements.',
     'error.reportSubmissionFailed': 'Erreur lors de la soumission du rapport. Un rapport similaire pourrait déjà exister à proximité.',
     'error.mapLoadFailed': 'Échec du chargement de la carte',
     'error.loadingMap': 'Chargement de SafePath...',
-    
-    // Languages
     'lang.english': 'English',
     'lang.spanish': 'Español',
     'lang.french': 'Français',
@@ -327,33 +292,24 @@ const translations = {
     'lang.russian': 'Русский',
   },
   zh: {
-    // Navigation
     'nav.map': '地图',
     'nav.reports': '报告',
     'nav.about': '关于',
     'nav.getStarted': '开始使用',
     'nav.safePath': 'SafePath 布朗克斯',
     'nav.tagline': '智能安全导航',
-    
-    // Main Interface
     'main.title': 'SafePath',
     'main.subtitle': '找到您最安全的路线',
     'main.origin': '输入起始位置',
     'main.destination': '输入目的地',
     'main.findRoutes': '查找安全路线',
     'main.reportIssue': '报告安全问题',
-    
-    // Crime Layer
     'crime.title': '犯罪数据层',
     'crime.subtitle': '显示最近的安全事件',
-    
-    // Footer
     'footer.poweredBy': '由纽约市开放数据提供支持',
     'footer.realTime': '实时安全分析',
     'footer.lastUpdated': '最后更新：刚刚',
     'footer.live': '实时',
-    
-    // Report Modal
     'report.title': '报告安全问题',
     'report.poorLighting': '照明不足',
     'report.generalSafety': '一般安全问题',
@@ -362,8 +318,6 @@ const translations = {
     'report.other': '其他安全问题',
     'report.additionalDetails': '额外详情',
     'report.optional': '（可选）：',
-    
-    // Route Information
     'route.safest': '最安全路线',
     'route.balanced': '平衡路线',
     'route.fastest': '最快路线',
@@ -371,8 +325,6 @@ const translations = {
     'route.safetyScore': '安全评分',
     'route.efficiency': '效率',
     'route.composite': '综合',
-    
-    // Route Display
     'routes.title': '路线',
     'routes.safest': '最安全',
     'routes.balanced': '平衡',
@@ -383,8 +335,6 @@ const translations = {
     'routes.score': '评分',
     'routes.openInMaps': '在地图中打开',
     'routes.analysisNote': '显示靠近路线（共 {total} 个）的 {count} 个事件',
-    
-    // Community Reports
     'community.poorLighting': '照明不足',
     'community.safetyConcern': '安全问题',
     'community.suspiciousActivity': '可疑活动',
@@ -396,16 +346,12 @@ const translations = {
     'community.notHelpful': '无用',
     'community.details': '详情',
     'community.communityReport': '社区报告',
-    
-    // Crime Information
     'crime.riskLevel': '风险等级',
     'crime.date': '日期',
     'crime.timeAgo': '时间前',
     'crime.today': '今天',
     'crime.daysAgo': '{days}天前',
     'crime.dayAgo': '1天前',
-    
-    // Report Modal Additional
     'report.selectIssueType': '选择问题类型：',
     'report.additionalDetailsLabel': '额外详情（可选）：',
     'report.charactersRemaining': '{count}/200字符',
@@ -415,15 +361,11 @@ const translations = {
     'report.instructions': '选择您要报告的安全问题类型。您可以添加可选的详细信息以帮助其他用户。报告是匿名的，并有助于构建更安全的社区地图。',
     'report.locationLabel': '位置：{lat}, {lng}',
     'report.clickToSetLocation': '点击地图上的任何位置以设置位置',
-    
-    // Error Messages
     'error.enterBothLocations': '请输入起始位置和目的地',
     'error.noRoutesFound': '无法找到这两点之间的路线',
     'error.reportSubmissionFailed': '提交报告时出错。附近可能已经存在类似的报告',
     'error.mapLoadFailed': '加载地图失败',
     'error.loadingMap': '加载SafePath...',
-    
-    // Languages
     'lang.english': 'English',
     'lang.spanish': 'Español',
     'lang.french': 'Français',
@@ -432,33 +374,24 @@ const translations = {
     'lang.russian': 'Русский',
   },
   ar: {
-    // Navigation
     'nav.map': 'خريطة',
     'nav.reports': 'تقارير',
     'nav.about': 'حول',
     'nav.getStarted': 'ابدأ',
     'nav.safePath': 'SafePath برونكس',
     'nav.tagline': 'ملاحة ذكية للسلامة',
-    
-    // Main Interface
     'main.title': 'SafePath',
     'main.subtitle': 'ابحث عن أكثر طريق آمن',
     'main.origin': 'أدخل موقع البداية',
     'main.destination': 'أدخل الوجهة',
     'main.findRoutes': 'العثور على طرق آمنة',
     'main.reportIssue': 'الإبلاغ عن مشكلة أمان',
-    
-    // Crime Layer
     'crime.title': 'طبقة بيانات الجريمة',
     'crime.subtitle': 'إظهار حوادث الأمان الأخيرة',
-    
-    // Footer
     'footer.poweredBy': 'مدعوم من بيانات نيويورك المفتوحة',
     'footer.realTime': 'تحليل الأمان في الوقت الفعلي',
     'footer.lastUpdated': 'آخر تحديث: الآن',
     'footer.live': 'مباشر',
-    
-    // Report Modal
     'report.title': 'الإبلاغ عن مشكلة أمان',
     'report.poorLighting': 'إضاءة ضعيفة',
     'report.generalSafety': 'قلق أمان عام',
@@ -467,8 +400,6 @@ const translations = {
     'report.other': 'مشكلة أمان أخرى',
     'report.additionalDetails': 'تفاصيل إضافية لـ',
     'report.optional': '(اختياري):',
-    
-    // Route Information
     'route.safest': 'الطريق الأكثر أمانًا',
     'route.balanced': 'طريق متوازن',
     'route.fastest': 'الطريق الأسرع',
@@ -476,8 +407,6 @@ const translations = {
     'route.safetyScore': 'نقاط الأمان',
     'route.efficiency': 'الكفاءة',
     'route.composite': 'الإجمالي',
-    
-    // Route Display
     'routes.title': 'الطرق',
     'routes.safest': 'أكثر أمانًا',
     'routes.balanced': 'متوازن',
@@ -488,8 +417,6 @@ const translations = {
     'routes.score': 'الدرجة',
     'routes.openInMaps': 'فتح في خرائط جوجل',
     'routes.analysisNote': 'إظهار {count} حادث أمان بالقرب من الطرق (من {total} إجمالي)',
-    
-    // Community Reports
     'community.poorLighting': 'إضاءة ضعيفة',
     'community.safetyConcern': 'قلق أمان عام',
     'community.suspiciousActivity': 'نشاط مشبوه',
@@ -501,16 +428,12 @@ const translations = {
     'community.notHelpful': 'غير مفيد',
     'community.details': 'التفاصيل',
     'community.communityReport': 'تقرير المجتمع',
-    
-    // Crime Information
     'crime.riskLevel': 'مستوى المخاطرة',
     'crime.date': 'التاريخ',
     'crime.timeAgo': 'منذ وقت',
     'crime.today': 'اليوم',
     'crime.daysAgo': '{days} أيام منذ',
     'crime.dayAgo': 'منذ يوم',
-    
-    // Report Modal Additional
     'report.selectIssueType': 'اختر نوع مشكلة:',
     'report.additionalDetailsLabel': 'التفاصيل الإضافية (اختيارية):',
     'report.charactersRemaining': '{count}/200 حرف',
@@ -520,15 +443,11 @@ const translations = {
     'report.instructions': 'حدد نوع مشكلة الأمان التي تريد الإبلاغ عنها. يمكنك إضافة تفاصيل إضافية اختيارية لمساعدة أعضاء المجتمع الآخرين. تقارير الإبلاغ عن المشكلات مخفية عن الآخرين وتساعد على بناء خريطة أمان مجتمعي أكثر أمانًا.',
     'report.locationLabel': 'الموقع: {lat}, {lng}',
     'report.clickToSetLocation': 'انقر على أي مكان على الخريطة لتحديد الموقع',
-    
-    // Error Messages
     'error.enterBothLocations': 'يرجى إدخال موقع البداية والوجهة',
     'error.noRoutesFound': 'لم يتم العثور على طرق بين هذه المواقع',
     'error.reportSubmissionFailed': 'فشل إرسال التقرير. قد يكون هناك تقرير مماثل بالقرب',
     'error.mapLoadFailed': 'فشل تحميل الخريطة',
     'error.loadingMap': 'جاري تحميل SafePath...',
-    
-    // Languages
     'lang.english': 'English',
     'lang.spanish': 'Español',
     'lang.french': 'Français',
@@ -537,33 +456,24 @@ const translations = {
     'lang.russian': 'Русский',
   },
   ru: {
-    // Navigation
     'nav.map': 'Карта',
     'nav.reports': 'Отчёты',
     'nav.about': 'О нас',
     'nav.getStarted': 'Начать',
     'nav.safePath': 'SafePath Бронкс',
     'nav.tagline': 'Интеллектуальная навигация безопасности',
-    
-    // Main Interface
     'main.title': 'SafePath',
     'main.subtitle': 'Найдите самый безопасный маршрут',
     'main.origin': 'Введите начальное местоположение',
     'main.destination': 'Введите пункт назначения',
     'main.findRoutes': 'Найти безопасные маршруты',
     'main.reportIssue': 'Сообщить о проблеме безопасности',
-    
-    // Crime Layer
     'crime.title': 'Слой данных о преступлениях',
     'crime.subtitle': 'Показать недавние инциденты безопасности',
-    
-    // Footer
     'footer.poweredBy': 'На основе открытых данных Нью-Йорка',
     'footer.realTime': 'Анализ безопасности в реальном времени',
     'footer.lastUpdated': 'Последнее обновление: Сейчас',
     'footer.live': 'В прямом эфире',
-    
-    // Report Modal
     'report.title': 'Сообщить о проблеме безопасности',
     'report.poorLighting': 'Плохое освещение',
     'report.generalSafety': 'Общая проблема безопасности',
@@ -572,8 +482,6 @@ const translations = {
     'report.other': 'Другая проблема безопасности',
     'report.additionalDetails': 'Дополнительные детали для',
     'report.optional': '(необязательно):',
-    
-    // Route Information
     'route.safest': 'Самый безопасный маршрут',
     'route.balanced': 'Сбалансированный маршрут',
     'route.fastest': 'Самый быстрый маршрут',
@@ -581,8 +489,6 @@ const translations = {
     'route.safetyScore': 'Оценка безопасности',
     'route.efficiency': 'Эффективность',
     'route.composite': 'Общая',
-    
-    // Route Display
     'routes.title': 'Маршруты',
     'routes.safest': 'Самый безопасный',
     'routes.balanced': 'Сбалансированный',
@@ -593,8 +499,6 @@ const translations = {
     'routes.score': 'Оценка',
     'routes.openInMaps': 'Открыть в Google Maps',
     'routes.analysisNote': 'Показать {count} инцидентов безопасности вблизи маршрутов (из {total} общего количества)',
-    
-    // Community Reports
     'community.poorLighting': 'Плохое освещение',
     'community.safetyConcern': 'Общая проблема безопасности',
     'community.suspiciousActivity': 'Подозрительная активность',
@@ -606,16 +510,12 @@ const translations = {
     'community.notHelpful': 'Бесполезно',
     'community.details': 'Детали',
     'community.communityReport': 'Сообщение сообщества',
-    
-    // Crime Information
     'crime.riskLevel': 'Уровень риска',
     'crime.date': 'Дата',
     'crime.timeAgo': 'Назад',
     'crime.today': 'Сегодня',
     'crime.daysAgo': '{days} дней назад',
     'crime.dayAgo': 'Назад',
-    
-    // Report Modal Additional
     'report.selectIssueType': 'Выберите тип проблемы:',
     'report.additionalDetailsLabel': 'Дополнительные детали (Необязательно):',
     'report.charactersRemaining': '{count}/200 символов',
@@ -625,15 +525,11 @@ const translations = {
     'report.instructions': 'Выберите тип проблемы безопасности, которую вы хотите сообщить. Вы можете добавить дополнительные неответственные детали, чтобы помочь другим пользователям. Сообщения о проблемах безопасности анонимны и помогают построить более безопасную карту сообщества.',
     'report.locationLabel': 'Расположение: {lat}, {lng}',
     'report.clickToSetLocation': 'Нажмите на любую точку на карте, чтобы установить местоположение',
-    
-    // Error Messages
     'error.enterBothLocations': 'Пожалуйста, введите оба места отправления и назначения',
     'error.noRoutesFound': 'Маршруты между этими точками не найдены',
     'error.reportSubmissionFailed': 'Ошибка при отправке отчёта. Возможно, поблизости уже есть аналогичный отчёт',
     'error.mapLoadFailed': 'Не удалось загрузить карту',
     'error.loadingMap': 'Загрузка SafePath...',
-    
-    // Languages
     'lang.english': 'English',
     'lang.spanish': 'Español',
     'lang.french': 'Français',

@@ -36,17 +36,12 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
   const originInputRef = useRef<HTMLInputElement>(null);
   const destinationInputRef = useRef<HTMLInputElement>(null);
 
-  // Core map state
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
-
-  // Data state
   const [crimeData, setCrimeData] = useState<CrimeData[]>([]);
   const [communityReports, setCommunityReports] = useState<CommunityReport[]>([]);
-
-  // UI state
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportLocation, setReportLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [showDirectionsPanel, setShowDirectionsPanel] = useState(true);
@@ -54,38 +49,30 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
   const [destination, setDestination] = useState('');
   const [routeOptions, setRouteOptions] = useState<RouteOption[]>([]);
   const [isCalculatingRoutes, setIsCalculatingRoutes] = useState(false);
-  
-  // Report form state
   const [selectedReportType, setSelectedReportType] = useState<CommunityReport['type'] | null>(null);
   const [reportComment, setReportComment] = useState('');
-
-  // Markers
   const [crimeMarkers, setCrimeMarkers] = useState<google.maps.Marker[]>([]);
   const [reportMarkers, setReportMarkers] = useState<google.maps.Marker[]>([]);
   const [currentInfoWindow, setCurrentInfoWindow] = useState<google.maps.InfoWindow | null>(null);
 
-  // Load community reports on mount
   useEffect(() => {
-    setCommunityReports(reportService.getReports());
+    // Clear all existing community reports on app load
+    reportService.clearAllReports();
+    setCommunityReports([]);
   }, []);
 
-  // Prevent browser context menu globally
   useEffect(() => {
     const handleContextMenu = (e: Event) => {
       e.preventDefault();
       e.stopPropagation();
     };
 
-    // Add global context menu prevention
     document.addEventListener('contextmenu', handleContextMenu);
-
-    // Cleanup on unmount
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
     };
   }, []);
 
-  // Setup global vote function for reports
   useEffect(() => {
     (window as Window & typeof globalThis & { voteReport?: (reportId: string, isUpvote: boolean) => void }).voteReport = (reportId: string, isUpvote: boolean) => {
       try {
@@ -94,7 +81,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         setCommunityReports(updatedReports);
         if (map) addReportMarkers(map, updatedReports);
       } catch (error) {
-        console.error('Error voting on report:', error);
+        // Silent fail - voting error
       }
     };
     return () => {
@@ -102,33 +89,21 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
     };
   }, [map]);
 
-  // Fetch crime data
   const fetchCrimeData = async () => {
     try {
-      console.log('🔍 Fetching Bronx crime data...');
-      
-      // Use past 2 months from current date
-      const endDate = new Date();
-      const startDate = new Date();
-      startDate.setMonth(endDate.getMonth() - 2); // Go back 2 months
+      const endDate = new Date('2025-03-31');
+      const startDate = new Date('2025-03-26');
 
       const startDateStr = startDate.toISOString().split('T')[0];
       const endDateStr = endDate.toISOString().split('T')[0];
 
-      console.log(`📅 Fetching crimes from ${startDateStr} to ${endDateStr}`);
-      console.log(`📅 Current system date: ${endDateStr}`);
-
-      // Simplified query focusing on Bronx borough with higher limit
       const apiUrl = `https://data.cityofnewyork.us/resource/5uac-w243.json?$limit=10000&boro_nm=BRONX&$where=cmplnt_fr_dt >= '${startDateStr}T00:00:00.000' AND cmplnt_fr_dt <= '${endDateStr}T23:59:59.999'&$order=cmplnt_fr_dt DESC`;
-
-      console.log('🌐 API URL:', apiUrl);
 
       const response = await fetch(apiUrl);
       if (response.ok) {
         const data = await response.json();
-        console.log(`📦 Received ${data.length} raw crime records from past 2 months`);
+        console.log(`📦 API returned ${data.length} total records`);
         
-        // Filter for valid coordinates
         const validCrimes = data.filter((crime: CrimeData) => 
           crime.latitude && 
           crime.longitude && 
@@ -136,103 +111,58 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
           !isNaN(parseFloat(crime.longitude)) &&
           parseFloat(crime.latitude) !== 0 &&
           parseFloat(crime.longitude) !== 0 &&
-          crime.boro_nm === 'BRONX' // Double-check it's Bronx
+          crime.boro_nm === 'BRONX'
         );
         
-        setCrimeData(validCrimes);
-        console.log(`✅ Loaded ${validCrimes.length} valid Bronx crime records from past 2 months`);
-        
-        // Log sample of crimes for debugging
+        console.log(`✅ Filtered to ${validCrimes.length} valid Bronx crimes`);
         if (validCrimes.length > 0) {
-          console.log('📋 Sample crimes:', validCrimes.slice(0, 3).map((c: CrimeData) => ({
-            type: c.ofns_desc,
-            date: c.cmplnt_fr_dt,
-            borough: c.boro_nm,
-            lat: c.latitude,
-            lng: c.longitude
-          })));
-        } else {
-          console.log('⚠️ No valid Bronx crime data found in past 2 months');
-          
-          // Fallback: try to get any recent NYC data to test the API
-          console.log('🔄 Testing API with broader query...');
+          console.log(`📅 Date range in data: ${validCrimes[0]?.cmplnt_fr_dt} to ${validCrimes[validCrimes.length-1]?.cmplnt_fr_dt}`);
+        }
+        
+        setCrimeData(validCrimes);
+        
+        if (validCrimes.length === 0) {
           try {
-            const testUrl = `https://data.cityofnewyork.us/resource/5uac-w243.json?$limit=100&$order=cmplnt_fr_dt DESC`;
-            const testResponse = await fetch(testUrl);
-            if (testResponse.ok) {
-              const testData = await testResponse.json();
-              console.log(`📊 Test query returned ${testData.length} records from all boroughs`);
-              const boroughCounts: Record<string, number> = {};
-              testData.forEach((crime: CrimeData) => {
-                boroughCounts[crime.boro_nm] = (boroughCounts[crime.boro_nm] || 0) + 1;
-              });
-              console.log('📍 Borough distribution:', boroughCounts);
+            const bronxUrl = `https://data.cityofnewyork.us/resource/5uac-w243.json?$limit=1000&boro_nm=BRONX&$order=cmplnt_fr_dt DESC`;
+            const bronxResponse = await fetch(bronxUrl);
+            if (bronxResponse.ok) {
+              const bronxData = await bronxResponse.json();
+              const validBronxCrimes = bronxData.filter((crime: CrimeData) => 
+                crime.latitude && 
+                crime.longitude && 
+                !isNaN(parseFloat(crime.latitude)) && 
+                !isNaN(parseFloat(crime.longitude)) &&
+                parseFloat(crime.latitude) !== 0 &&
+                parseFloat(crime.longitude) !== 0
+              );
               
-              // Also check date range in the test data
-              const dates = testData.map((crime: CrimeData) => crime.cmplnt_fr_dt).slice(0, 5);
-              console.log('📅 Sample dates from recent data:', dates);
-              
-              // Try a broader Bronx query without date filter
-              console.log('🔄 Trying Bronx query without date filter...');
-              const bronxUrl = `https://data.cityofnewyork.us/resource/5uac-w243.json?$limit=1000&boro_nm=BRONX&$order=cmplnt_fr_dt DESC`;
-              const bronxResponse = await fetch(bronxUrl);
-              if (bronxResponse.ok) {
-                const bronxData = await bronxResponse.json();
-                console.log(`📊 Bronx-only query returned ${bronxData.length} records`);
-                if (bronxData.length > 0) {
-                  console.log('📅 Latest Bronx crime date:', bronxData[0].cmplnt_fr_dt);
-                  
-                  // Use this data if it exists
-                  const validBronxCrimes = bronxData.filter((crime: CrimeData) => 
-                    crime.latitude && 
-                    crime.longitude && 
-                    !isNaN(parseFloat(crime.latitude)) && 
-                    !isNaN(parseFloat(crime.longitude)) &&
-                    parseFloat(crime.latitude) !== 0 &&
-                    parseFloat(crime.longitude) !== 0
-                  );
-                  
-                  if (validBronxCrimes.length > 0) {
-                    setCrimeData(validBronxCrimes);
-                    console.log(`🎉 Using ${validBronxCrimes.length} Bronx records from broader query`);
-                  }
-                }
+              if (validBronxCrimes.length > 0) {
+                setCrimeData(validBronxCrimes);
               }
             }
           } catch (testError) {
-            console.error('❌ Test query also failed:', testError);
+            // Fallback query failed
           }
         }
-      } else {
-        console.error(`❌ API response failed: ${response.status} ${response.statusText}`);
-        const errorText = await response.text();
-        console.error('Error details:', errorText);
       }
     } catch (error) {
-      console.error('❌ Crime data fetch failed:', error);
+      // Crime data fetch failed
     }
   };
 
-  // Add crime markers near routes only
   const addCrimeMarkersNearRoutes = (mapInstance: google.maps.Map, crimes: CrimeData[], routes: RouteOption[]) => {
-    console.log(`🗺️ Adding crime markers near ${routes.length} routes from ${crimes.length} total crimes`);
-    
-    // Clear existing crime markers
     crimeMarkers.forEach(marker => marker.setMap(null));
     setCrimeMarkers([]);
 
     if (crimes.length === 0 || routes.length === 0) {
-      console.log(`❌ Not showing markers: crimes=${crimes.length}, routes=${routes.length}`);
       return;
     }
 
-    // Get all route points
     const allRoutePoints: google.maps.LatLng[] = [];
     routes.forEach(routeOption => {
       allRoutePoints.push(...routeOption.route.overview_path);
     });
 
-    // Filter crimes that are near any route (within 200m for consistency)
     const nearRouteCrimes = crimes.filter(crime => {
       const crimeLat = parseFloat(crime.latitude);
       const crimeLng = parseFloat(crime.longitude);
@@ -240,29 +170,22 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
       
       return allRoutePoints.some(routePoint => {
         const distance = google.maps.geometry.spherical.computeDistanceBetween(crimePos, routePoint);
-        return distance < 200; // 200 meters from any route (consistent with risk calc)
+        return distance < 200;
       });
     });
 
-    console.log(`📍 Found ${nearRouteCrimes.length} crimes near routes`);
-
-    // Create markers for crimes near routes
     const newMarkers = nearRouteCrimes.slice(0, 100).map((crime, index) => {
       const lat = parseFloat(crime.latitude);
       const lng = parseFloat(crime.longitude);
 
-      if (index < 5) {
-        console.log(`📍 Route crime ${index + 1}: ${crime.ofns_desc} at (${lat}, ${lng})`);
-      }
-
-      const marker = new google.maps.Marker({
+              const marker = new google.maps.Marker({
         position: { lat, lng },
         map: mapInstance,
         title: `${crime.ofns_desc} - ${new Date(crime.cmplnt_fr_dt).toLocaleDateString()}`,
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
-          scale: 7, // Slightly larger for better visibility
-          fillColor: '#dc2626', // Slightly darker red
+          scale: 7,
+          fillColor: '#dc2626',
           fillOpacity: 0.9,
           strokeColor: '#ffffff',
           strokeWeight: 2
@@ -270,9 +193,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         zIndex: 1500
       });
 
-      // Improved info window with better styling
       const crimeDate = new Date(crime.cmplnt_fr_dt);
-      const daysAgo = Math.floor((Date.now() - crimeDate.getTime()) / (1000 * 60 * 60 * 24));
       
       const severityColor = crime.law_cat_cd === 'FELONY' ? '#dc2626' : 
                            crime.law_cat_cd === 'MISDEMEANOR' ? '#f59e0b' : '#10b981';
@@ -329,21 +250,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
                 ">${crimeDate.toLocaleDateString()}</span>
               </div>
               
-              <div style="
-                display: flex; 
-                justify-content: space-between; 
-                align-items: center;
-              ">
-                <span style="
-                  font-size: 13px; 
-                  font-weight: 600; 
-                  color: #374151;
-                ">⏰ ${t('crime.timeAgo')}:</span>
-                <span style="
-                  font-size: 13px; 
-                  color: #4b5563;
-                ">${daysAgo === 0 ? t('crime.today') : daysAgo === 1 ? t('crime.dayAgo') : t('crime.daysAgo').replace('{days}', daysAgo.toString())}</span>
-              </div>
+
             </div>
             
             <div style="
@@ -366,12 +273,10 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
       });
 
       marker.addListener('click', () => {
-        // Close any existing info window (crime or community report)
         if (currentInfoWindow) {
           currentInfoWindow.close();
         }
         
-        // Open new info window and set it as current
         infoWindow.open(mapInstance, marker);
         setCurrentInfoWindow(infoWindow);
       });
@@ -380,12 +285,9 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
     });
 
     setCrimeMarkers(newMarkers);
-    console.log(`✅ Successfully added ${newMarkers.length} crime markers near routes`);
   };
 
-  // Add report markers to map
   const addReportMarkers = (mapInstance: google.maps.Map, reports: CommunityReport[]) => {
-    // Close any existing info window when adding new markers
     if (currentInfoWindow) {
       currentInfoWindow.close();
       setCurrentInfoWindow(null);
@@ -404,7 +306,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
 
     const newMarkers = reports.map(report => {
       const reportInfo = reportTypes[report.type];
-      const timeAgo = getTimeAgo(report.timestamp);
       const label = t(reportInfo.labelKey);
 
       const marker = new google.maps.Marker({
@@ -476,22 +377,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
             ` : ''}
             
             <div style="margin-bottom: 12px;">
-              <div style="
-                display: flex; 
-                justify-content: space-between; 
-                align-items: center;
-                margin-bottom: 4px;
-              ">
-                <span style="
-                  font-size: 13px; 
-                  font-weight: 600; 
-                  color: #374151;
-                ">⏰ ${t('community.reported')}:</span>
-                <span style="
-                  font-size: 13px; 
-                  color: #4b5563;
-                ">${timeAgo}</span>
-              </div>
+
               
               <div style="
                 display: flex; 
@@ -557,12 +443,10 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
       });
 
       marker.addListener('click', () => {
-        // Close any existing info window
         if (currentInfoWindow) {
           currentInfoWindow.close();
         }
         
-        // Open new info window and set it as current
         infoWindow.open(mapInstance, marker);
         setCurrentInfoWindow(infoWindow);
       });
@@ -573,19 +457,8 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
     setReportMarkers(newMarkers);
   };
 
-  // Helper function for time ago with translations
-  const getTimeAgo = (timestamp: Date): string => {
-    const diffMs = Date.now() - timestamp.getTime();
-    const diffHours = Math.floor(diffMs / 3600000);
-    const diffDays = Math.floor(diffMs / 86400000);
 
-    if (diffHours < 1) return t('crime.today');
-    if (diffHours < 24) return `${diffHours}h ago`;
-    if (diffDays === 1) return t('crime.dayAgo');
-    return t('crime.daysAgo').replace('{days}', diffDays.toString());
-  };
 
-  // Submit community report
   const submitReport = (type: CommunityReport['type'], comment: string) => {
     if (!reportLocation) return;
 
@@ -605,14 +478,11 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
       setReportLocation(null);
       setSelectedReportType(null);
       setReportComment('');
-      console.log('✅ Report submitted successfully');
     } catch (error) {
-      console.error('❌ Error submitting report:', error);
       alert(t('error.reportSubmissionFailed'));
     }
   };
 
-  // Calculate safe routes
   const calculateSafeRoutes = async () => {
     if (!directionsService || !map || !origin || !destination) {
       alert(t('error.enterBothLocations'));
@@ -621,7 +491,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
 
     setIsCalculatingRoutes(true);
     
-    // Clear existing routes and crime markers
     routeOptions.forEach(option => option.renderer.setMap(null));
     setRouteOptions([]);
     crimeMarkers.forEach(marker => marker.setMap(null));
@@ -639,16 +508,13 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
       directionsService.route(request, (result, status) => {
         if (status === 'OK' && result) {
           const routes = result.routes.slice(0, 3).map((route, index) => {
-            // More accurate risk calculation - only count crimes very close to THIS specific route
             let riskPoints = 0;
-            const processedCrimes = new Set<string>(); // Track processed crimes to avoid double counting
+            const processedCrimes = new Set<string>();
             
             if (crimeData.length > 0) {
-              // Sample route points more densely for better accuracy
               const routePoints: google.maps.LatLng[] = [];
               route.overview_path.forEach((point, i) => {
                 routePoints.push(point);
-                // Add intermediate points for better coverage
                 if (i < route.overview_path.length - 1) {
                   const nextPoint = route.overview_path[i + 1];
                   const midLat = (point.lat() + nextPoint.lat()) / 2;
@@ -659,20 +525,19 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
               
               crimeData.forEach(crime => {
                 const crimeId = crime.cmplnt_num;
-                if (processedCrimes.has(crimeId)) return; // Skip if already counted
+                if (processedCrimes.has(crimeId)) return;
                 
                 const crimeLat = parseFloat(crime.latitude);
                 const crimeLng = parseFloat(crime.longitude);
                 const crimePos = new google.maps.LatLng(crimeLat, crimeLng);
                 
-                // Check if crime is within 100m of ANY point on this specific route (tighter radius)
                 const isNearRoute = routePoints.some(point => {
                   const distance = google.maps.geometry.spherical.computeDistanceBetween(point, crimePos);
-                  return distance < 100; // 100 meters - much tighter for accuracy
+                  return distance < 100;
                 });
                 
                 if (isNearRoute) {
-                  processedCrimes.add(crimeId); // Mark as processed
+                  processedCrimes.add(crimeId);
                   riskPoints += crime.law_cat_cd === 'FELONY' ? 3 : 
                                crime.law_cat_cd === 'MISDEMEANOR' ? 2 : 1;
                 }
@@ -681,32 +546,27 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
 
             const duration = route.legs[0].duration?.value || 0;
             const safetyScore = Math.round(Math.max(20, 100 - riskPoints * 2));
-            const efficiencyScore = Math.round(Math.max(20, 100 - (duration / 60))); // Penalty for longer routes
+            const efficiencyScore = Math.round(Math.max(20, 100 - (duration / 60)));
             const compositeScore = Math.round((safetyScore * 0.7) + (efficiencyScore * 0.3));
-
-            console.log(`Route ${index + 1}: ${riskPoints} unique risks (100m radius), safety: ${safetyScore}, efficiency: ${efficiencyScore}, composite: ${compositeScore}`);
 
             return {
               route,
-              renderer: null as any, // Will be set below
+              renderer: null as any,
               safetyScore,
               efficiencyScore,
               compositeScore,
               riskPoints,
-              recommendation: 'balanced' as RouteOption['recommendation'] // Will be determined after sorting
+              recommendation: 'balanced' as RouteOption['recommendation']
             };
           });
 
-          // Sort by composite score and assign types
           const sortedRoutes = routes.sort((a, b) => b.compositeScore - a.compositeScore);
           
           sortedRoutes.forEach((routeOption, index) => {
-            // Assign route types based on ranking
             if (index === 0) routeOption.recommendation = 'safest';
             else if (index === 1) routeOption.recommendation = 'balanced'; 
             else routeOption.recommendation = 'fastest';
 
-            // Set colors and styles based on recommendation
             const colors = {
               safest: { color: '#22c55e', weight: 8, opacity: 1.0, zIndex: 1000 },
               balanced: { color: '#3b82f6', weight: 6, opacity: 0.8, zIndex: 500 },
@@ -733,7 +593,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
 
           setRouteOptions(sortedRoutes);
           
-          // Now show crime markers near the calculated routes
           if (map && crimeData.length > 0) {
             addCrimeMarkersNearRoutes(map, crimeData, sortedRoutes);
           }
@@ -743,17 +602,22 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         setIsCalculatingRoutes(false);
       });
     } catch (error) {
-      console.error('Error calculating routes:', error);
       setIsCalculatingRoutes(false);
     }
   };
 
-  // Initialize Google Maps
   useEffect(() => {
     const initMap = async () => {
       try {
+        // Temporary debugging
+        const envApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+        const apiKey = envApiKey || 'AIzaSyDyZ0afTSGuDA4PQGjNJGk3-IXGkBWMglQ';
+        
+        console.log('Environment API Key:', envApiKey ? 'Found' : 'Not found');
+        console.log('Using API Key:', apiKey ? 'Available' : 'Not available');
+
         const loader = new Loader({
-          apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+          apiKey: apiKey,
           version: 'weekly',
           libraries: ['places', 'geometry']
         });
@@ -766,7 +630,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
           center: { lat: 40.8448, lng: -73.8648 },
           zoom: 13,
           styles: [
-            // Lighter, more readable map styling
             { featureType: "all", elementType: "geometry", stylers: [{ color: "#f5f5f5" }] },
             { featureType: "all", elementType: "labels.text.fill", stylers: [{ color: "#2d3748" }] },
             { featureType: "all", elementType: "labels.text.stroke", stylers: [{ color: "#ffffff" }] },
@@ -787,23 +650,25 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         setMap(mapInstance);
         setDirectionsService(dirService);
 
-        // Setup autocomplete
         if (originInputRef.current && destinationInputRef.current) {
-          const originAutocomplete = new google.maps.places.Autocomplete(originInputRef.current);
-          const destAutocomplete = new google.maps.places.Autocomplete(destinationInputRef.current);
+          try {
+            const originAutocomplete = new google.maps.places.Autocomplete(originInputRef.current);
+            const destAutocomplete = new google.maps.places.Autocomplete(destinationInputRef.current);
 
-          originAutocomplete.addListener('place_changed', () => {
-            const place = originAutocomplete.getPlace();
-            if (place.formatted_address) setOrigin(place.formatted_address);
-          });
+            originAutocomplete.addListener('place_changed', () => {
+              const place = originAutocomplete.getPlace();
+              if (place.formatted_address) setOrigin(place.formatted_address);
+            });
 
-          destAutocomplete.addListener('place_changed', () => {
-            const place = destAutocomplete.getPlace();
-            if (place.formatted_address) setDestination(place.formatted_address);
-          });
+            destAutocomplete.addListener('place_changed', () => {
+              const place = destAutocomplete.getPlace();
+              if (place.formatted_address) setDestination(place.formatted_address);
+            });
+          } catch (error) {
+            // Fallback if autocomplete fails
+          }
         }
 
-        // Right-click to report
         mapInstance.addListener('rightclick', (event: google.maps.MapMouseEvent) => {
           if (event.latLng) {
             setReportLocation({ lat: event.latLng.lat(), lng: event.latLng.lng() });
@@ -813,7 +678,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
           }
         });
 
-        // Close info windows when clicking on empty map areas
         mapInstance.addListener('click', () => {
           if (currentInfoWindow) {
             currentInfoWindow.close();
@@ -824,7 +688,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         setIsLoading(false);
         await fetchCrimeData();
       } catch (error) {
-        console.error('Map initialization error:', error);
         setError('Failed to load map');
         setIsLoading(false);
       }
@@ -833,7 +696,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
     initMap();
   }, []);
 
-  // Update report markers when data changes
   useEffect(() => {
     if (map && communityReports.length > 0) {
       addReportMarkers(map, communityReports);
@@ -862,7 +724,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         </div>
       )}
 
-      {/* Control Panel */}
       <div className="absolute top-4 left-4 z-20 dark-glass-morphism rounded-2xl shadow-2xl border border-slate-600 w-80 max-h-[calc(100vh-8rem)] overflow-hidden">
         <div className="p-4 border-b border-slate-600">
           <div className="flex items-center justify-between">
@@ -883,7 +744,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
 
         {showDirectionsPanel && (
           <div className="p-4 space-y-4 max-h-96 overflow-y-auto">
-            {/* Route Inputs */}
             <div className="space-y-3">
               <input
                 ref={originInputRef}
@@ -914,7 +774,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
               </button>
             </div>
 
-            {/* Route Options */}
             {routeOptions.length > 0 && (
               <div className="space-y-3">
                 <h2 className="font-semibold text-slate-200">{t('routes.title')}</h2>
@@ -997,7 +856,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         )}
       </div>
 
-      {/* Report Button - Moved higher to avoid bottom bar */}
       <button
         onClick={() => {
           setShowReportModal(true);
@@ -1013,11 +871,9 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
         </svg>
       </button>
 
-      {/* Enhanced Report Modal with proper UI */}
       {showReportModal && (
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-slate-800 rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-slate-600">
-            {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-slate-600">
               <div>
                 <h3 className="text-xl font-bold text-slate-100">{t('report.title')}</h3>
@@ -1042,7 +898,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
               </button>
             </div>
             
-            {/* Instructions */}
             <div className="p-6 bg-blue-900/20 border-b border-slate-600">
               <div className="flex items-start space-x-3">
                 <svg className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1057,7 +912,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
               </div>
             </div>
 
-            {/* Report Type Selection */}
             <div className="p-6">
               <h4 className="text-sm font-semibold text-slate-200 mb-4">{t('report.selectIssueType')}</h4>
               <div className="space-y-3">
@@ -1095,7 +949,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
                 })}
               </div>
 
-              {/* Comment Section */}
               {selectedReportType && (
                 <div className="mt-6">
                   <label className="block text-sm font-semibold text-slate-200 mb-2">
@@ -1115,7 +968,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = '' }) => {
                 </div>
               )}
 
-              {/* Submit Button */}
               {selectedReportType && (
                 <div className="mt-6 flex space-x-3">
                   <button
