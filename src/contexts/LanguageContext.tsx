@@ -57,6 +57,57 @@ const translations = {
     'route.efficiency': 'Efficiency',
     'route.composite': 'Overall',
     
+    // Route Display
+    'routes.title': 'Routes',
+    'routes.safest': 'Safest',
+    'routes.balanced': 'Balanced',
+    'routes.fastest': 'Fastest',
+    'routes.safety': 'Safety',
+    'routes.speed': 'Speed',
+    'routes.risks': 'Risks',
+    'routes.score': 'Score',
+    'routes.openInMaps': 'Open in Maps',
+    'routes.analysisNote': 'Showing {count} incidents near routes (from {total} total)',
+    
+    // Community Reports
+    'community.poorLighting': 'Poor Lighting',
+    'community.safetyConcern': 'Safety Concern',
+    'community.suspiciousActivity': 'Suspicious Activity',
+    'community.harassment': 'Harassment',
+    'community.otherIssue': 'Other Issue',
+    'community.reported': 'Reported',
+    'community.votes': 'Votes',
+    'community.helpful': 'Helpful',
+    'community.notHelpful': 'Not helpful',
+    'community.details': 'Details',
+    'community.communityReport': 'Community Report',
+    
+    // Crime Information
+    'crime.riskLevel': 'Risk Level',
+    'crime.date': 'Date',
+    'crime.timeAgo': 'Time ago',
+    'crime.today': 'Today',
+    'crime.daysAgo': '{days} days ago',
+    'crime.dayAgo': '1 day ago',
+    
+    // Report Modal Additional
+    'report.selectIssueType': 'Select Issue Type:',
+    'report.additionalDetailsLabel': 'Additional Details (Optional):',
+    'report.charactersRemaining': '{count}/200 characters',
+    'report.cancel': 'Cancel',
+    'report.submitReport': 'Submit Report',
+    'report.howToReport': 'How to Report',
+    'report.instructions': 'Select the type of safety issue you want to report. You can add optional details to help other users. Reports are anonymous and help build a safer community map.',
+    'report.locationLabel': 'Location: {lat}, {lng}',
+    'report.clickToSetLocation': 'Click anywhere on the map to set location',
+    
+    // Error Messages
+    'error.enterBothLocations': 'Please enter both starting location and destination',
+    'error.noRoutesFound': 'Could not find routes between these locations.',
+    'error.reportSubmissionFailed': 'Error submitting report. A similar report may already exist nearby.',
+    'error.mapLoadFailed': 'Failed to load map',
+    'error.loadingMap': 'Loading SafePath...',
+    
     // Languages
     'lang.english': 'English',
     'lang.spanish': 'Español',
@@ -110,6 +161,57 @@ const translations = {
     'route.safetyScore': 'Puntuación de Seguridad',
     'route.efficiency': 'Eficiencia',
     'route.composite': 'General',
+    
+    // Route Display
+    'routes.title': 'Rutas',
+    'routes.safest': 'Más Segura',
+    'routes.balanced': 'Balanceada',
+    'routes.fastest': 'Más Rápida',
+    'routes.safety': 'Seguridad',
+    'routes.speed': 'Velocidad',
+    'routes.risks': 'Riesgos',
+    'routes.score': 'Puntuación',
+    'routes.openInMaps': 'Abrir en Maps',
+    'routes.analysisNote': 'Mostrando {count} incidentes cerca de rutas (de {total} total)',
+    
+    // Community Reports
+    'community.poorLighting': 'Iluminación Deficiente',
+    'community.safetyConcern': 'Preocupación General de Seguridad',
+    'community.suspiciousActivity': 'Actividad Sospechosa',
+    'community.harassment': 'Incidente de Acoso',
+    'community.otherIssue': 'Otro Problema de Seguridad',
+    'community.reported': 'Reportado',
+    'community.votes': 'Votos',
+    'community.helpful': 'Útil',
+    'community.notHelpful': 'No útil',
+    'community.details': 'Detalles',
+    'community.communityReport': 'Reporte de Comunidad',
+    
+    // Crime Information
+    'crime.riskLevel': 'Nivel de Riesgo',
+    'crime.date': 'Fecha',
+    'crime.timeAgo': 'Hace tiempo',
+    'crime.today': 'Hoy',
+    'crime.daysAgo': '{days} días atrás',
+    'crime.dayAgo': 'Hace 1 día',
+    
+    // Report Modal Additional
+    'report.selectIssueType': 'Seleccionar Tipo de Problema:',
+    'report.additionalDetailsLabel': 'Detalles Adicionales (Opcional):',
+    'report.charactersRemaining': '{count}/200 caracteres',
+    'report.cancel': 'Cancelar',
+    'report.submitReport': 'Enviar Reporte',
+    'report.howToReport': 'Cómo Reportar',
+    'report.instructions': 'Selecciona el tipo de problema de seguridad que quieres reportar. Puedes agregar detalles opcionales para ayudar a otros usuarios. Los informes son anónimos y ayudan a construir un mapa de comunidad más seguro.',
+    'report.locationLabel': 'Ubicación: {lat}, {lng}',
+    'report.clickToSetLocation': 'Haz clic en cualquier lugar del mapa para establecer la ubicación',
+    
+    // Error Messages
+    'error.enterBothLocations': 'Por favor, ingrese ambas ubicaciones de inicio y destino',
+    'error.noRoutesFound': 'No se encontraron rutas entre estas ubicaciones.',
+    'error.reportSubmissionFailed': 'Error al enviar el informe. Ya existe un informe similar cerca.',
+    'error.mapLoadFailed': 'Error al cargar el mapa',
+    'error.loadingMap': 'Cargando SafePath...',
     
     // Languages
     'lang.english': 'English',
@@ -165,6 +267,57 @@ const translations = {
     'route.efficiency': 'Efficacité',
     'route.composite': 'Global',
     
+    // Route Display
+    'routes.title': 'Itinéraires',
+    'routes.safest': 'Plus Sûr',
+    'routes.balanced': 'Équilibré',
+    'routes.fastest': 'Plus Rapide',
+    'routes.safety': 'Sécurité',
+    'routes.speed': 'Vitesse',
+    'routes.risks': 'Risques',
+    'routes.score': 'Score',
+    'routes.openInMaps': 'Ouvrir dans Maps',
+    'routes.analysisNote': 'Affichage de {count} incidents près des itinéraires (sur {total} total)',
+    
+    // Community Reports
+    'community.poorLighting': 'Éclairage Défaillant',
+    'community.safetyConcern': 'Préoccupation Générale de Sécurité',
+    'community.suspiciousActivity': 'Activité Suspecte',
+    'community.harassment': 'Incident de Harcèlement',
+    'community.otherIssue': 'Autre Problème de Sécurité',
+    'community.reported': 'Signalé',
+    'community.votes': 'Votes',
+    'community.helpful': 'Utile',
+    'community.notHelpful': 'Pas utile',
+    'community.details': 'Détails',
+    'community.communityReport': 'Rapport de Communauté',
+    
+    // Crime Information
+    'crime.riskLevel': 'Niveau de Risque',
+    'crime.date': 'Date',
+    'crime.timeAgo': 'Il y a du temps',
+    'crime.today': 'Aujourd\'hui',
+    'crime.daysAgo': '{days} jours plus tôt',
+    'crime.dayAgo': 'Il y a 1 jour',
+    
+    // Report Modal Additional
+    'report.selectIssueType': 'Sélectionner le Type de Problème:',
+    'report.additionalDetailsLabel': 'Détails Supplémentaires (Optionnel):',
+    'report.charactersRemaining': '{count}/200 caractères',
+    'report.cancel': 'Annuler',
+    'report.submitReport': 'Soumettre le Rapport',
+    'report.howToReport': 'Comment Signaler',
+    'report.instructions': 'Sélectionnez le type de problème de sécurité que vous souhaitez signaler. Vous pouvez ajouter des détails supplémentaires pour aider les autres utilisateurs. Les rapports sont anonymes et aident à construire une carte communautaire plus sûre.',
+    'report.locationLabel': 'Emplacement: {lat}, {lng}',
+    'report.clickToSetLocation': 'Cliquez n\'importe où sur la carte pour définir l\'emplacement',
+    
+    // Error Messages
+    'error.enterBothLocations': 'Veuillez entrer les deux emplacements de départ et d\'arrivée',
+    'error.noRoutesFound': 'Impossible de trouver des itinéraires entre ces emplacements.',
+    'error.reportSubmissionFailed': 'Erreur lors de la soumission du rapport. Un rapport similaire pourrait déjà exister à proximité.',
+    'error.mapLoadFailed': 'Échec du chargement de la carte',
+    'error.loadingMap': 'Chargement de SafePath...',
+    
     // Languages
     'lang.english': 'English',
     'lang.spanish': 'Español',
@@ -218,6 +371,57 @@ const translations = {
     'route.safetyScore': '安全评分',
     'route.efficiency': '效率',
     'route.composite': '综合',
+    
+    // Route Display
+    'routes.title': '路线',
+    'routes.safest': '最安全',
+    'routes.balanced': '平衡',
+    'routes.fastest': '最快',
+    'routes.safety': '安全',
+    'routes.speed': '速度',
+    'routes.risks': '风险',
+    'routes.score': '评分',
+    'routes.openInMaps': '在地图中打开',
+    'routes.analysisNote': '显示靠近路线（共 {total} 个）的 {count} 个事件',
+    
+    // Community Reports
+    'community.poorLighting': '照明不足',
+    'community.safetyConcern': '安全问题',
+    'community.suspiciousActivity': '可疑活动',
+    'community.harassment': '骚扰事件',
+    'community.otherIssue': '其他问题',
+    'community.reported': '已报告',
+    'community.votes': '投票',
+    'community.helpful': '有用',
+    'community.notHelpful': '无用',
+    'community.details': '详情',
+    'community.communityReport': '社区报告',
+    
+    // Crime Information
+    'crime.riskLevel': '风险等级',
+    'crime.date': '日期',
+    'crime.timeAgo': '时间前',
+    'crime.today': '今天',
+    'crime.daysAgo': '{days}天前',
+    'crime.dayAgo': '1天前',
+    
+    // Report Modal Additional
+    'report.selectIssueType': '选择问题类型：',
+    'report.additionalDetailsLabel': '额外详情（可选）：',
+    'report.charactersRemaining': '{count}/200字符',
+    'report.cancel': '取消',
+    'report.submitReport': '提交报告',
+    'report.howToReport': '如何报告',
+    'report.instructions': '选择您要报告的安全问题类型。您可以添加可选的详细信息以帮助其他用户。报告是匿名的，并有助于构建更安全的社区地图。',
+    'report.locationLabel': '位置：{lat}, {lng}',
+    'report.clickToSetLocation': '点击地图上的任何位置以设置位置',
+    
+    // Error Messages
+    'error.enterBothLocations': '请输入起始位置和目的地',
+    'error.noRoutesFound': '无法找到这两点之间的路线',
+    'error.reportSubmissionFailed': '提交报告时出错。附近可能已经存在类似的报告',
+    'error.mapLoadFailed': '加载地图失败',
+    'error.loadingMap': '加载SafePath...',
     
     // Languages
     'lang.english': 'English',
@@ -273,6 +477,57 @@ const translations = {
     'route.efficiency': 'الكفاءة',
     'route.composite': 'الإجمالي',
     
+    // Route Display
+    'routes.title': 'الطرق',
+    'routes.safest': 'أكثر أمانًا',
+    'routes.balanced': 'متوازن',
+    'routes.fastest': 'أسرع',
+    'routes.safety': 'أمان',
+    'routes.speed': 'سرعة',
+    'routes.risks': 'المخاطر',
+    'routes.score': 'الدرجة',
+    'routes.openInMaps': 'فتح في خرائط جوجل',
+    'routes.analysisNote': 'إظهار {count} حادث أمان بالقرب من الطرق (من {total} إجمالي)',
+    
+    // Community Reports
+    'community.poorLighting': 'إضاءة ضعيفة',
+    'community.safetyConcern': 'قلق أمان عام',
+    'community.suspiciousActivity': 'نشاط مشبوه',
+    'community.harassment': 'حادثة مضايقة',
+    'community.otherIssue': 'مشكلة أخرى',
+    'community.reported': 'تم الإبلاغ عن',
+    'community.votes': 'تصويت',
+    'community.helpful': 'مفيد',
+    'community.notHelpful': 'غير مفيد',
+    'community.details': 'التفاصيل',
+    'community.communityReport': 'تقرير المجتمع',
+    
+    // Crime Information
+    'crime.riskLevel': 'مستوى المخاطرة',
+    'crime.date': 'التاريخ',
+    'crime.timeAgo': 'منذ وقت',
+    'crime.today': 'اليوم',
+    'crime.daysAgo': '{days} أيام منذ',
+    'crime.dayAgo': 'منذ يوم',
+    
+    // Report Modal Additional
+    'report.selectIssueType': 'اختر نوع مشكلة:',
+    'report.additionalDetailsLabel': 'التفاصيل الإضافية (اختيارية):',
+    'report.charactersRemaining': '{count}/200 حرف',
+    'report.cancel': 'إلغاء',
+    'report.submitReport': 'إرسال التقرير',
+    'report.howToReport': 'كيفية الإبلاغ',
+    'report.instructions': 'حدد نوع مشكلة الأمان التي تريد الإبلاغ عنها. يمكنك إضافة تفاصيل إضافية اختيارية لمساعدة أعضاء المجتمع الآخرين. تقارير الإبلاغ عن المشكلات مخفية عن الآخرين وتساعد على بناء خريطة أمان مجتمعي أكثر أمانًا.',
+    'report.locationLabel': 'الموقع: {lat}, {lng}',
+    'report.clickToSetLocation': 'انقر على أي مكان على الخريطة لتحديد الموقع',
+    
+    // Error Messages
+    'error.enterBothLocations': 'يرجى إدخال موقع البداية والوجهة',
+    'error.noRoutesFound': 'لم يتم العثور على طرق بين هذه المواقع',
+    'error.reportSubmissionFailed': 'فشل إرسال التقرير. قد يكون هناك تقرير مماثل بالقرب',
+    'error.mapLoadFailed': 'فشل تحميل الخريطة',
+    'error.loadingMap': 'جاري تحميل SafePath...',
+    
     // Languages
     'lang.english': 'English',
     'lang.spanish': 'Español',
@@ -326,6 +581,57 @@ const translations = {
     'route.safetyScore': 'Оценка безопасности',
     'route.efficiency': 'Эффективность',
     'route.composite': 'Общая',
+    
+    // Route Display
+    'routes.title': 'Маршруты',
+    'routes.safest': 'Самый безопасный',
+    'routes.balanced': 'Сбалансированный',
+    'routes.fastest': 'Самый быстрый',
+    'routes.safety': 'Безопасность',
+    'routes.speed': 'Скорость',
+    'routes.risks': 'Риски',
+    'routes.score': 'Оценка',
+    'routes.openInMaps': 'Открыть в Google Maps',
+    'routes.analysisNote': 'Показать {count} инцидентов безопасности вблизи маршрутов (из {total} общего количества)',
+    
+    // Community Reports
+    'community.poorLighting': 'Плохое освещение',
+    'community.safetyConcern': 'Общая проблема безопасности',
+    'community.suspiciousActivity': 'Подозрительная активность',
+    'community.harassment': 'Инцидент преследования',
+    'community.otherIssue': 'Другая проблема безопасности',
+    'community.reported': 'Сообщено',
+    'community.votes': 'Голоса',
+    'community.helpful': 'Полезно',
+    'community.notHelpful': 'Бесполезно',
+    'community.details': 'Детали',
+    'community.communityReport': 'Сообщение сообщества',
+    
+    // Crime Information
+    'crime.riskLevel': 'Уровень риска',
+    'crime.date': 'Дата',
+    'crime.timeAgo': 'Назад',
+    'crime.today': 'Сегодня',
+    'crime.daysAgo': '{days} дней назад',
+    'crime.dayAgo': 'Назад',
+    
+    // Report Modal Additional
+    'report.selectIssueType': 'Выберите тип проблемы:',
+    'report.additionalDetailsLabel': 'Дополнительные детали (Необязательно):',
+    'report.charactersRemaining': '{count}/200 символов',
+    'report.cancel': 'Отмена',
+    'report.submitReport': 'Отправить отчёт',
+    'report.howToReport': 'Как сообщить',
+    'report.instructions': 'Выберите тип проблемы безопасности, которую вы хотите сообщить. Вы можете добавить дополнительные неответственные детали, чтобы помочь другим пользователям. Сообщения о проблемах безопасности анонимны и помогают построить более безопасную карту сообщества.',
+    'report.locationLabel': 'Расположение: {lat}, {lng}',
+    'report.clickToSetLocation': 'Нажмите на любую точку на карте, чтобы установить местоположение',
+    
+    // Error Messages
+    'error.enterBothLocations': 'Пожалуйста, введите оба места отправления и назначения',
+    'error.noRoutesFound': 'Маршруты между этими точками не найдены',
+    'error.reportSubmissionFailed': 'Ошибка при отправке отчёта. Возможно, поблизости уже есть аналогичный отчёт',
+    'error.mapLoadFailed': 'Не удалось загрузить карту',
+    'error.loadingMap': 'Загрузка SafePath...',
     
     // Languages
     'lang.english': 'English',

@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import React from "react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import "./globals.css";
 
@@ -7,7 +8,11 @@ export const metadata: Metadata = {
   description: "Find the safest walking routes in the Bronx using real-time crime data and community reports",
   keywords: "safety, navigation, Bronx, walking routes, crime data, community safety",
   authors: [{ name: "SafePath Team" }],
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: "#3b82f6",
 };
 
