@@ -1,75 +1,32 @@
-# SafePath Bronx - Intelligent Safety Navigation
+# SafePath Bronx
 
-Find the safest walking routes in the Bronx using real-time crime data and community reports.
+SafePath Bronx is a community-driven safety navigation platform that helps residents find the safest walking routes in the Bronx using real-time crime data and community reports.
 
-## Features
+## What It Does
 
-- 🗺️ **Interactive Map**: Google Maps focused on the Bronx
-- 🛡️ **Safe Route Planning**: AI-powered route analysis using crime data
-- 📊 **Real-time Crime Data**: NYC Open Data integration
-- 🏘️ **Community Reports**: User-generated safety alerts
-- 🌐 **Multi-language Support**: 6 languages (EN, ES, FR, ZH, AR, RU)
-- 📱 **Responsive Design**: Works on desktop and mobile
+- **Safe Route Planning**: Calculates walking routes optimized for safety using crime data analysis
+- **Real-Time Crime Data**: Displays recent crime incidents from NYC Open Data on an interactive map
+- **Community Reporting**: Allows users to report safety concerns like poor lighting, suspicious activity, and harassment
+- **Risk Assessment**: Provides safety scores for different route options based on nearby crime incidents
+- **Multi-Language Support**: Available in English, Spanish, French, Chinese, Arabic, and Russian
 
-## Setup Instructions
+## Key Features
 
-### 1. Clone the Repository
-```bash
-git clone <your-repo-url>
-cd hackthebronx
-```
+- Interactive map with crime data visualization
+- Smart route optimization that considers safety factors
+- Community-powered safety reporting system
+- Real-time data from NYC Open Data Portal
+- Mobile-responsive design
+- Anonymous reporting system
 
-### 2. Install Dependencies
-```bash
-npm install
-```
+## How It Works
 
-### 3. Configure Google Maps API Key
-
-1. Get your API key from [Google Cloud Console](https://developers.google.com/maps/documentation/javascript/get-api-key)
-2. Enable the following APIs:
-   - Maps JavaScript API
-   - Places API
-   - Directions API
-3. Create a `.env.local` file in the root directory:
-```bash
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_actual_api_key_here
-```
-
-### 4. Run the Development Server
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view the application.
-
-## Tech Stack
-
-- **Frontend**: Next.js 15, React 19, TypeScript
-- **Styling**: Tailwind CSS
-- **Maps**: Google Maps JavaScript API
-- **Data**: NYC Open Data API
-- **Storage**: Browser SessionStorage (for testing)
+1. **Explore**: View real-time crime data and community reports on the interactive map
+2. **Navigate**: Enter your starting location and destination to get safe route recommendations
+3. **Contribute**: Right-click on the map to report safety issues and help build a safer community
 
 ## Data Sources
 
-- **Crime Data**: NYC Open Data (January 2024 - May 2024)
-- **Community Reports**: User-generated, session-based storage
-
-## Security Notes
-
-- API keys are stored in environment variables
-- No sensitive data is committed to the repository
-- Community reports use session storage for privacy
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## License
-
-This project was created for educational purposes and hackathon participation.
+- Crime data from NYC Open Data Portal
+- Community-generated safety reports
+- Google Maps for routing and location services
